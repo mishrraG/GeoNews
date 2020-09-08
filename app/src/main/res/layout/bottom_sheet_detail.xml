@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet_demo"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#EBFFFFFF"
+    android:orientation="vertical"
+    android:paddingTop="32dp"
+    android:paddingBottom="32dp"
+    app:behavior_hideable="true"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <TextView
+        android:id="@+id/openinbrowser_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:drawableLeft="@drawable/ic_baseline_open_in_browser_24"
+        android:drawablePadding="32dp"
+        android:fontFamily="sans-serif-black"
+        android:padding="16dp"
+        android:text="Open in browser"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#5C5757"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/share_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:drawableLeft="@drawable/ic_baseline_share_24"
+        android:drawablePadding="32dp"
+        android:fontFamily="sans-serif-black"
+        android:padding="16dp"
+        android:text="Share"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#5C5757"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/copy_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:drawableLeft="@drawable/ic_baseline_link_24"
+        android:drawablePadding="32dp"
+        android:fontFamily="sans-serif-black"
+        android:padding="16dp"
+        android:text="Copy to clipboard"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="#5C5757"
+        android:textSize="14sp" />
+
+
+</LinearLayout>
