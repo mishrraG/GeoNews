@@ -207,6 +207,7 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(cardView.getVisibility()==View.GONE)
                 {
                     cardView.setVisibility(View.VISIBLE);
@@ -275,6 +276,10 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
+
+                NavHostFragment.findNavController(FirstFragment.this)
+                        .navigate(R.id.action_FirstFragment_to_SecondActivity);
+
             }
         });
         newsButton.setOnClickListener(new View.OnClickListener() {

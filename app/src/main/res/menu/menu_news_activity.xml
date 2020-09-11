@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.smnews.MainActivity">
+    <item
+        android:title="Search"
+        android:id="@+id/search_btn"
+        android:contentDescription="Search"
+        android:icon="@drawable/ic_baseline_search_24"
+        app:showAsAction="always"
+        app:actionViewClass="android.widget.SearchView"
+        android:theme="@android:style/Theme.Holo.Light.DarkActionBar"/>
+</menu>
