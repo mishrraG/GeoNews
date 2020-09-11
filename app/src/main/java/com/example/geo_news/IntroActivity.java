@@ -54,15 +54,11 @@ public class IntroActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_intro);
 
-        // hide the action bar
 
-        //getSupportActionBar().hide();
-
-        // ini views
         btnNext = findViewById(R.id.btn_next);
         btnGetStarted = findViewById(R.id.btn_get_started);
         tabIndicator = findViewById(R.id.tab_indicator);
-        //btnAnim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.button_animation);
+
         tvSkip = findViewById(R.id.tv_skip);
 
         // fill list screen
@@ -77,11 +73,7 @@ public class IntroActivity extends AppCompatActivity {
         introViewPagerAdapter = new IntroViewPagerAdapter(this,mList);
         screenPager.setAdapter(introViewPagerAdapter);
 
-        // setup tablayout with viewpager
-
         tabIndicator.setupWithViewPager(screenPager);
-
-        // next button click Listner
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,13 +142,10 @@ public class IntroActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                //open main activity
+
 
                 Intent mainActivity = new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(mainActivity);
-                // also we need to save a boolean value to storage so next time when the user run the app
-                // we could know that he is already checked the intro screen activity
-                // i'm going to use shared preferences to that process
                 savePrefsData();
                 finish();
 
@@ -182,7 +171,7 @@ public class IntroActivity extends AppCompatActivity {
 
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefs",MODE_PRIVATE);
-        Boolean isIntroActivityOpnendBefore = pref.getBoolean("isIntroOpnend",false);
+        boolean isIntroActivityOpnendBefore = pref.getBoolean("isIntroOpnend",false);
         return  isIntroActivityOpnendBefore;
 
 
@@ -194,12 +183,12 @@ public class IntroActivity extends AppCompatActivity {
         SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefs",MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean("isIntroOpnend",true);
-        editor.commit();
+        editor.apply();
 
 
     }
 
-    // show the GETSTARTED Button and hide the indicator and the next button
+
     private void loaddLastScreen() {
 
         btnNext.setVisibility(View.INVISIBLE);

@@ -201,13 +201,7 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback {
         });
 
 
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
 
-                return false;
-            }
-        });
 
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -216,10 +210,12 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback {
                 if(cardView.getVisibility()==View.GONE)
                 {
                     cardView.setVisibility(View.VISIBLE);
+                    button.setImageResource(R.drawable.ic_baseline_cancel_24);
                 }
                 else
                 {
                     cardView.setVisibility(View.GONE);
+                    button.setImageResource(R.drawable.ic_baseline_search_24);
                 }
             }
         });
@@ -284,6 +280,14 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback {
         newsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+            }
+        });
+        //launch your news activity here
+        //use countrycode variable to get country code
+        newsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
             }
         });

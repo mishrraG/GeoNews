@@ -1,5 +1,6 @@
 package com.example.geo_news;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -7,10 +8,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentActivity;
@@ -67,12 +70,32 @@ public class MainActivity extends AppCompatActivity{
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
-            fa.signOut();
-            mGoogleSignInClient.signOut();
-            Toast.makeText(MainActivity.this,"Logged Out!!",Toast.LENGTH_LONG).show();
-            Intent logIn= new Intent(MainActivity.this, Login.class);
-            startActivity(logIn);
-            finish();
+            MaterialAlertDialogBuilder alertbuilder = new MaterialAlertDialogBuilder(this);
+            alertbuilder.setTitle("Alert!!!!")
+                    .setMessage("Do you Want to log out?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            fa.signOut();
+                            mGoogleSignInClient.signOut();
+                            Toast.makeText(MainActivity.this,"Logged Out!!",Toast.LENGTH_LONG).show();
+                            Intent logIn= new Intent(MainActivity.this, Login.class);
+                            logIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(logIn);
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setCancelable(false)
+                    .setIcon(R.drawable.ic_baseline_warning_24);
+            AlertDialog alertDialog = alertbuilder.create();
+            alertDialog.show();
+
             return true;
         }
 

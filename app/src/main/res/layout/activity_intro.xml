@@ -25,8 +25,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginBottom="16dp"
-        android:background="#fff"
-        android:drawableRight="@drawable/ic_baseline_arrow_forward_24"
+        android:drawableEnd="@drawable/ic_baseline_arrow_forward_24"
         android:text="Next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
