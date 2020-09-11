@@ -9,8 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
@@ -32,8 +35,11 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textview.MaterialTextView;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -48,9 +54,12 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback {
     private Context mContext;
     private List<Address> addressList,slist;
     String locality,countryName,featureName,countrycode;
+    View bottomsheet;
+    MaterialButton newsButton;
     FloatingActionButton button;
     MaterialCardView cardView;
     SearchView searchView;
+    MaterialTextView textView;
     double latitude,longitude;
 
     @Override
@@ -80,11 +89,15 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback {
         cardView = view.findViewById(R.id.searchCard);
         searchView = view.findViewById(R.id.searchV);
         cardView.setVisibility(View.GONE);
+        textView = view.findViewById(R.id.placeText);
+        bottomsheet = view.findViewById(R.id.standardBottomSheet);
+        newsButton = view.findViewById(R.id.newsLaunch);
         // Initialize the SDK
         //Places.initialize(mContext.getApplicationContext(),apiKey);
 
         // Create a new PlacesClient instance
         //PlacesClient placesClient = Places.createClient(mContext);
+
         Log.d("onViewCreated","inside onViewCreated");
         if(getActivity()!=null) {
             Log.d("get Activity","not null");
@@ -102,9 +115,12 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        final BottomSheetBehavior standardBottomSheetBehavior = BottomSheetBehavior.from(bottomsheet);
+        Log.d("height",String.valueOf(textView.getLineHeight()));
         Log.d("onMapReadey","map ready started");
+        standardBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         final Geocoder geocoder = new Geocoder(mContext);
-        LatLng def = new LatLng(1.0,1.0);
+       /* LatLng def = new LatLng(1.0,1.0);
         if(Geocoder.isPresent())
         {
             try {
@@ -135,7 +151,7 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback {
             marker.showInfoWindow();
         }
         mMap.moveCamera(CameraUpdateFactory.newLatLng(def));
-
+*/
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -157,24 +173,26 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback {
                         countryName = addressList.get(0).getCountryName();
                     }
                 }
-                if(featureName!=null && countryName!=null)
+                if(locality!=null && countryName!=null) {
+                    if(marker!=null)
+                    {
+                        marker.remove();
+                    }
+                    marker = mMap.addMarker(new MarkerOptions().position(latLng));
+                    textView.setText(locality+","+countryName+"("+countrycode+")");
+                    standardBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
+                }
+                else if(featureName!=null && countryName!=null)
                 {
                     if(marker!=null)
                     {
                         marker.remove();
                     }
-                    marker = mMap.addMarker(new MarkerOptions().position(latLng).title(featureName+","+countryName));
-                    marker.showInfoWindow();
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-
-                }
-                else if(locality!=null && countryName!=null) {
-                    if(marker!=null)
-                    {
-                        marker.remove();
-                    }
-                    marker = mMap.addMarker(new MarkerOptions().position(latLng).title(locality+","+countryName));
-                    marker.showInfoWindow();
+                    marker = mMap.addMarker(new MarkerOptions().position(latLng));
+                    textView.setText(featureName+","+countryName+"("+countrycode+")");
+                    standardBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
                 }
@@ -233,8 +251,9 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback {
                     {
                         marker.remove();
                     }
-                    marker = mMap.addMarker(new MarkerOptions().position(latLng).title(featureName+","+countryName));
-                    marker.showInfoWindow();
+                    marker = mMap.addMarker(new MarkerOptions().position(latLng));
+                    textView.setText(featureName+","+countryName+"("+countrycode+")");
+                    standardBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                 }
                 else if(locality!=null && countryName!=null) {
@@ -242,8 +261,9 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback {
                     {
                         marker.remove();
                     }
-                    marker = mMap.addMarker(new MarkerOptions().position(latLng).title(locality+","+countryName));
-                    marker.showInfoWindow();
+                    marker = mMap.addMarker(new MarkerOptions().position(latLng));
+                    textView.setText(locality+","+countryName+"("+countrycode+")");
+                    standardBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                 }
 
@@ -261,7 +281,15 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback {
                 return false;
             }
         });
+        newsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
     }
+
 
 
 
