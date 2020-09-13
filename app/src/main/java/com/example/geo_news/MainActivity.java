@@ -9,25 +9,20 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
     Button logOut;
     FirebaseAuth fa;
     GoogleSignInAccount account;
@@ -39,7 +34,7 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        fa= FirebaseAuth.getInstance();
+        fa = FirebaseAuth.getInstance();
         account = GoogleSignIn.getLastSignedInAccount(this);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -48,7 +43,7 @@ public class MainActivity extends AppCompatActivity{
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.nav_host_fragment,new FirstFragment());
+        fragmentTransaction.add(R.id.nav_host_fragment, new FirstFragment());
         fragmentTransaction.commit();
 
 
@@ -71,16 +66,16 @@ public class MainActivity extends AppCompatActivity{
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
             MaterialAlertDialogBuilder alertbuilder = new MaterialAlertDialogBuilder(this);
-            alertbuilder.setTitle("Alert!!!!")
-                    .setMessage("Do you Want to log out?")
+            alertbuilder.setTitle("Alert!")
+                    .setMessage("Do you want to log out?")
                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             fa.signOut();
                             mGoogleSignInClient.signOut();
-                            Toast.makeText(MainActivity.this,"Logged Out!!",Toast.LENGTH_LONG).show();
-                            Intent logIn= new Intent(MainActivity.this, Login.class);
-                            logIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                            Toast.makeText(MainActivity.this, "Logged out successfully", Toast.LENGTH_LONG).show();
+                            Intent logIn = new Intent(MainActivity.this, Login.class);
+                            logIn.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(logIn);
                             finish();
                         }
@@ -97,6 +92,9 @@ public class MainActivity extends AppCompatActivity{
             alertDialog.show();
 
             return true;
+        } else if (id == R.id.action_more_info) {
+            Intent intent = new Intent(MainActivity.this, AboutInfoActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

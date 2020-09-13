@@ -43,17 +43,17 @@ import java.util.List;
 
 public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
-    public static final String API_KEY = "my_api_key_here";
+    public static final String API_KEY = "MY-NEWS-API-KEY-HERE";
     private RecyclerView recyclerView;
     private List<Article> articles = new ArrayList<>();
     private NewsAdapter adapter;
     private String TAG = MainActivity.class.getSimpleName();
-    private CountryCodePicker countryCodePicker;
+
     private SwipeRefreshLayout swipeRefreshLayout;
-    private String selected_country;
+    private String selected_country, selected_country_name;
     private NestedScrollView nestedScrollView;
     private FloatingActionButton fab;
-    //    private BottomSheetBehavior bottomSheetBehavior;
+
 
     // error layout
     private ConstraintLayout errorConstraintLayout;
@@ -66,12 +66,21 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
 
+        Intent intent = getIntent();
+        selected_country = intent.getStringExtra("countrycode");
+        selected_country_name = intent.getStringExtra("countryname");
+
+        getSupportActionBar().setTitle(selected_country_name);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         nestedScrollView = findViewById(R.id.nested_scroll_view);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(NewsActivity.this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setNestedScrollingEnabled(false);
-        countryCodePicker = findViewById(R.id.ccp);
+        //countryCodePicker = findViewById(R.id.ccp);
 
         //        error handling
         errorConstraintLayout = findViewById(R.id.error_layout);
@@ -80,15 +89,15 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
         errorMessage = findViewById(R.id.error_message_tv);
         retryBtn = findViewById(R.id.retry_btn);
 
-        selected_country = countryCodePicker.getSelectedCountryNameCode().toLowerCase();
+        //selected_country = countryCodePicker.getSelectedCountryNameCode().toLowerCase();
         LoadJson(selected_country, "");
-        countryCodePicker.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
-            @Override
-            public void onCountrySelected() {
-                selected_country = countryCodePicker.getSelectedCountryNameCode().toLowerCase();
-                LoadJson(selected_country, "");
-            }
-        });
+//        countryCodePicker.setOnCountryChangeListener(new CountryCodePicker.OnCountryChangeListener() {
+//            @Override
+//            public void onCountrySelected() {
+//                selected_country = countryCodePicker.getSelectedCountryNameCode().toLowerCase();
+//                LoadJson(selected_country, "");
+//            }
+//        });
 
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setColorSchemeColors(getResources().getColor(R.color.red), getResources().getColor(R.color.blue), getResources().getColor(R.color.yellow));
@@ -205,18 +214,24 @@ public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayou
             @Override
             public boolean onQueryTextSubmit(String s) {
                 if (s.length() > 3) {
-                    LoadJson(selected_country,s);
+                    LoadJson(selected_country, s);
                 }
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                LoadJson(selected_country,s);
+                LoadJson(selected_country, s);
                 return false;
             }
         });
         searchItem.getIcon().setVisible(false, false);
+        return true;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
         return true;
     }
 

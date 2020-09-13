@@ -63,8 +63,6 @@ public class NewsDetailsActivity extends AppCompatActivity {
         LoadNewsWebview(dUrl);
 
         bundle = new Bundle();
-
-
     }
 
     @Override

@@ -3,6 +3,9 @@ package com.example.geo_news;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,15 +46,24 @@ public class Login extends AppCompatActivity {
     String varCode, verid;
     FirebaseAuth firebaseAuth,mAuth;
     GoogleSignInClient mGoogleSignInClient;
+    private String num, code;
+    private String[] mCode;
     private static final int RC_SIGN_IN = 123;//for identifying the activity result
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_login);
         FirebaseApp.initializeApp(this);
         spinner = findViewById(R.id.spin);
-        spinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, Country.countryName));
+//        spinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, Country.countryName));
         phno = findViewById(R.id.user_number);//input field for phone number
         otp = findViewById(R.id.otp);//input field for OTP code.
         otptxt= findViewById(R.id.otpshw);//text view
@@ -59,23 +71,40 @@ public class Login extends AppCompatActivity {
         progressBar = findViewById(R.id.progress);
         check = findViewById(R.id.verify);//button for verifying otp code
         gsign= findViewById(R.id.google_sign);//google signIn button
-        otp.setVisibility(View.INVISIBLE);
-        check.setVisibility(View.INVISIBLE);
-        otptxt.setVisibility(View.INVISIBLE);
+        otp.setVisibility(View.GONE);
+        check.setVisibility(View.GONE);
+        otptxt.setVisibility(View.GONE);
         progressBar.setVisibility(View.INVISIBLE);
+
+        mCode = getResources().getStringArray(R.array.country_list_code);
+
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                code =  mCode[i];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                code = mCode[0];
+            }
+        });
 
 
         //button to start the otp validation
         get.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String num, code = Country.countryCode[spinner.getSelectedItemPosition()];//finding country code
+
+//                Country.countryCode[spinner.getSelectedItemPosition()];//finding country code
                 num = phno.getText().toString().trim();//10 digit phone number
-                if ((num.isEmpty()) || (num.length() != 10)) {
-                    Toast.makeText(Login.this, "Invalid", Toast.LENGTH_LONG).show();
+                if ((num.isEmpty())) {
+                    Toast.makeText(Login.this, "Cannot be blank", Toast.LENGTH_LONG).show();
                 } else {
+                    Toast.makeText(Login.this, "OTP sent!", Toast.LENGTH_SHORT).show();
                     num = code + num;//county code + phone number
-                    get.setVisibility(View.INVISIBLE);
+//                    get.setVisibility(View.INVISIBLE);
                     check.setVisibility(View.VISIBLE);
                     otp.setVisibility(View.VISIBLE);
                     otptxt.setVisibility(View.VISIBLE);
@@ -91,6 +120,11 @@ public class Login extends AppCompatActivity {
                 .build();
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        // smish
+//        FirebaseApp.initializeApp(this);
+
+
         mAuth= FirebaseAuth.getInstance();
         //button to start google signIn
         gsign.setOnClickListener(new View.OnClickListener() {
