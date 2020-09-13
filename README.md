@@ -52,6 +52,7 @@ Contributors
 
 [Punit Mishra](https://github.com/T1NUP)
 
+[Anshuman Pati](https://github.com/anshumanpati6)
 
 
 ### A [DSC KIIT](https://github.com/DSC-KIIT) Project
