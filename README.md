@@ -1,4 +1,11 @@
 # GeoNews
+
+ DSC KIIT Project
+
+Test Changes
+=======
+ #Hello world!
+=======
 An open source news application for serving location based news.
 
 This app is under [AGPLv3](https://www.gnu.org/licenses/license-list.html#AGPLv3.0) License terms.

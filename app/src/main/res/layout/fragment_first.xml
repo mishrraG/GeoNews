@@ -1,28 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".FirstFragment">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textview_first"
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/searchCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_margin="8dp">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textAutoComplete"
+            app:iconifiedByDefault="false"
+            app:queryHint="Search Location" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/standardBottomSheet"
+        style="@style/Theme.MaterialComponents.Light.BottomSheetDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#E6F3F3F3"
+        android:elevation="5dp"
+        android:nestedScrollingEnabled="true"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="1000dp"
+        app:behavior_skipCollapsed="true"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        app:shapeAppearanceOverlay="@style/CardStyle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--            <com.google.android.material.button.MaterialButton-->
+            <!--                android:id="@+id/newsLaunch"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_margin="8dp"-->
+            <!--                android:text="Check news"-->
+            <!--                app:icon="@drawable/ic_baseline_arrow_forward_24"-->
+            <!--                app:iconGravity="textEnd" />-->
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/placeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="Default text"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+
+            <com.ebanx.swipebtn.SwipeButton
+                android:id="@+id/slide_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="100dp"
+                android:layout_marginBottom="24dp"
+                app:button_background="@drawable/slide_button_image_background"
+                app:button_image_disabled="@drawable/ic_baseline_arrow_forward_24"
+                app:button_image_enabled="@drawable/ic_baseline_arrow_forward_24"
+                app:button_image_height="40dp"
+                app:button_image_width="42dp"
+                app:has_activate_state="false"
+                app:initial_state="disabled"
+                app:inner_text="Swipe for top headlines"
+                app:inner_text_background="@drawable/slide_inner_text_background"
+                app:inner_text_bottom_padding="12dp"
+                app:inner_text_size="18sp"
+                app:inner_text_top_padding="12dp" />
+
+
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/search_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_first_fragment"
-        app:layout_constraintBottom_toTopOf="@id/button_first"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:elevation="5dp"
+        android:src="@drawable/ic_baseline_search_24"
+        app:borderWidth="0dp"
+        app:fabSize="normal"
+        app:layout_anchor="@id/standardBottomSheet"
+        app:layout_anchorGravity="top|end"
+        app:tint="@color/quantum_white_100" />
 
-    <Button
-        android:id="@+id/button_first"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/next"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_first" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+
+
