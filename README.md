@@ -1,14 +1,12 @@
 # GeoNews
+<img src="https://github.com/anshumanpati6/GeoNews/blob/master/geonews.png" width="500">
 
- DSC KIIT Project
-
-Test Changes
-=======
- #Hello world!
-=======
-An open source news application for serving location based news.
+#### An open source news application for serving location based news.
 
 This app is under [AGPLv3](https://www.gnu.org/licenses/license-list.html#AGPLv3.0) License terms.
+
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/mishrraG/GeoNews)
+
 
 [![GitHub license](https://img.shields.io/github/license/anshumanpati6/GeoNews?color=bright%20green&label=Android%20CI&logo=Github&logoColor=white&style=plastic)](https://github.com/mishrraG/GeoNews/actions/new)                  [![API](https://img.shields.io/badge/API%20Level-28-blue)](https://android-arsenal.com/api?level=28)
 
@@ -37,6 +35,7 @@ Download and install:
   3. Then type in: `git clone https://github.com/mishrraG/GeoNews.git`
   4. Import the Project in Android Studio and start coding :)
 
+
   
 Changelog
 ==================================
@@ -53,3 +52,8 @@ Contributors
 
 [Punit Mishra](https://github.com/T1NUP)
 
+
+
+### A [DSC KIIT](https://github.com/DSC-KIIT) Project
+
+<img src="https://dev-to-uploads.s3.amazonaws.com/uploads/organization/profile_image/2086/859e9317-d715-4a2b-b88e-61cdfd379039.png" width="100">
