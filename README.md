@@ -52,3 +52,8 @@ Contributors
 
 [Punit Mishra](https://github.com/T1NUP)
 
+
+
+### A [DSC KIIT](https://github.com/DSC-KIIT) Project
+
+<img src="https://dev-to-uploads.s3.amazonaws.com/uploads/organization/profile_image/2086/859e9317-d715-4a2b-b88e-61cdfd379039.png" width="100">
