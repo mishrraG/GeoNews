@@ -30,8 +30,7 @@
         android:elevation="5dp"
         android:nestedScrollingEnabled="true"
         app:behavior_hideable="true"
-        app:behavior_peekHeight="1000dp"
-        app:behavior_skipCollapsed="true"
+        app:behavior_peekHeight="0dp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         app:shapeAppearanceOverlay="@style/CardStyle">
 
@@ -40,14 +39,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!--            <com.google.android.material.button.MaterialButton-->
-            <!--                android:id="@+id/newsLaunch"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_margin="8dp"-->
-            <!--                android:text="Check news"-->
-            <!--                app:icon="@drawable/ic_baseline_arrow_forward_24"-->
-            <!--                app:iconGravity="textEnd" />-->
+            <View
+                android:id="@+id/divider"
+                android:layout_width="35dp"
+                android:layout_marginTop="3dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="5dp"
+                android:background="?android:attr/listDivider" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/placeText"
@@ -72,8 +70,8 @@
                 app:button_background="@drawable/slide_button_image_background"
                 app:button_image_disabled="@drawable/ic_baseline_arrow_forward_24"
                 app:button_image_enabled="@drawable/ic_baseline_arrow_forward_24"
-                app:button_image_height="40dp"
-                app:button_image_width="42dp"
+                app:button_image_height="38dp"
+                app:button_image_width="38dp"
                 app:has_activate_state="false"
                 app:initial_state="disabled"
                 app:inner_text="Swipe for top headlines"

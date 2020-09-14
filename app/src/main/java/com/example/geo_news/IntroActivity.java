@@ -3,14 +3,16 @@ package com.example.geo_news;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-
-import android.widget.Button;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.tabs.TabLayout;
@@ -27,8 +29,8 @@ public class IntroActivity extends AppCompatActivity {
     MaterialButton btnNext;
     int position = 0;
     MaterialButton btnGetStarted;
-    //Animation btnAnim ;
     MaterialTextView tvSkip;
+    private Animation get_started_anim;
 
 
     @Override
@@ -58,6 +60,10 @@ public class IntroActivity extends AppCompatActivity {
         btnGetStarted = findViewById(R.id.btn_get_started);
         tabIndicator = findViewById(R.id.tab_indicator);
 
+        get_started_anim = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.get_started_anim);
+
+        final Vibrator vibrator =(Vibrator) IntroActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
+
         tvSkip = findViewById(R.id.tv_skip);
 
         // fill list screen
@@ -80,6 +86,7 @@ public class IntroActivity extends AppCompatActivity {
             public void onClick(View v) {
                 position = screenPager.getCurrentItem();
                 if (position < mList.size()) {
+                    vibrator.vibrate(5);
                     position++;
                     screenPager.setCurrentItem(position);
                 }
@@ -122,6 +129,7 @@ public class IntroActivity extends AppCompatActivity {
         btnGetStarted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                vibrator.vibrate(10);
                 Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(mainActivity);
                 savePrefsData();
@@ -140,8 +148,7 @@ public class IntroActivity extends AppCompatActivity {
 
     private boolean restorePrefData() {
         SharedPreferences pref = getApplicationContext().getSharedPreferences("myPrefs", MODE_PRIVATE);
-        boolean isIntroActivityOpnendBefore = pref.getBoolean("isIntroOpnend", false);
-        return isIntroActivityOpnendBefore;
+        return pref.getBoolean("isIntroOpnend", false);
     }
 
     private void savePrefsData() {
@@ -157,6 +164,7 @@ public class IntroActivity extends AppCompatActivity {
         btnGetStarted.setVisibility(View.VISIBLE);
         tvSkip.setVisibility(View.INVISIBLE);
         tabIndicator.setVisibility(View.INVISIBLE);
+        btnGetStarted.setAnimation(get_started_anim);
 
     }
 }

@@ -58,7 +58,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_SUBJECT, receivedSource);
-                intent.putExtra(Intent.EXTRA_TEXT, receivedUrl + "\n\nShared from SM news.");
+                intent.putExtra(Intent.EXTRA_TEXT, receivedUrl + "\n\nShared from Geo news.");
                 startActivity(Intent.createChooser(intent, "Share link:"));
             }
         });

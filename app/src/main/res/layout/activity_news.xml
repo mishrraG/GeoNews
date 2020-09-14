@@ -31,20 +31,9 @@
                     android:layout_marginRight="16dp"
                     android:fontFamily="sans-serif-condensed-medium"
                     android:text="Top Headlines"
-                    android:textColor="#5E4F4F"
-                    android:textSize="24sp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                    android:textColor="#000000"
                     android:textStyle="bold" />
-
-                <!--                <com.hbb20.CountryCodePicker-->
-                <!--                    android:background="@drawable/round_white"-->
-                <!--                    android:backgroundTint="#0CED95B8"-->
-                <!--                    android:id="@+id/ccp"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_margin="16dp"-->
-                <!--                    app:ccp_showFullName="true"-->
-                <!--                    app:ccp_showNameCode="true"-->
-                <!--                    app:ccp_showPhoneCode="false" />-->
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"

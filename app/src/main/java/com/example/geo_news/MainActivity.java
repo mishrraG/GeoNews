@@ -56,6 +56,12 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
+    public void exit() {
+        Toast.makeText(this, "backk", Toast.LENGTH_SHORT).show();
+        super.onBackPressed();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -63,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        //no inspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
             MaterialAlertDialogBuilder alertbuilder = new MaterialAlertDialogBuilder(this);
             alertbuilder.setTitle("Alert!")
