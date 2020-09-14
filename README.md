@@ -12,6 +12,9 @@ This app is under [AGPLv3](https://www.gnu.org/licenses/license-list.html#AGPLv3
 
 *Bugs and enhancements can be reported under:* https://github.com/mishrraG/GeoNews/issues
 
+## Have a look - 
+<img src="https://github.com/anshumanpati6/GeoNews/blob/master/lossydemo.gif" width="200"> <img src ="https://github.com/anshumanpati6/GeoNews/blob/master/OTPhone.jpg" width="200"> <img src="https://github.com/anshumanpati6/GeoNews/blob/master/OnBoard1.jpg" width="200"> <img src="https://github.com/anshumanpati6/GeoNews/blob/master/OnBoard2.jpg" width="200">
+
 ## APIs we used -
 
 [Google Maps Geo Location](https://cloud.google.com/maps-platform/)
