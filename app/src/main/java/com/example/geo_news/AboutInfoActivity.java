@@ -1,12 +1,21 @@
 package com.example.geo_news;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AboutInfoActivity extends AppCompatActivity {
+
+    private RecyclerView memberRecyclerView;
+    private AboutInfoAdapter aboutInfoAdapter;
+    List<AboutInfoModel> memberList;
 
     @Override
     public boolean onSupportNavigateUp() {
@@ -24,17 +33,25 @@ public class AboutInfoActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        TextView gitlinkPunit = findViewById(R.id.punit_github_tv);
-        gitlinkPunit.setMovementMethod(LinkMovementMethod.getInstance());
+        memberRecyclerView = findViewById(R.id.memberRecyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        memberRecyclerView.setLayoutManager(layoutManager);
 
-        TextView gitlinkMonimoy = findViewById(R.id.monimoy_github_tv);
-        gitlinkMonimoy.setMovementMethod(LinkMovementMethod.getInstance());
+        aboutInfoAdapter = new AboutInfoAdapter(initMember());
+        memberRecyclerView.setAdapter(aboutInfoAdapter);
+        aboutInfoAdapter.notifyDataSetChanged();
 
-        TextView gitlinkSmish = findViewById(R.id.smish_github_tv);
-        gitlinkSmish.setMovementMethod(LinkMovementMethod.getInstance());
+//        TextView gitlinkPunit = findViewById(R.id.punit_github_tv);
+//        gitlinkPunit.setMovementMethod(LinkMovementMethod.getInstance());
+    }
 
-
-
-
+    private List<AboutInfoModel> initMember() {
+        memberList = new ArrayList<>();
+        memberList.add(new AboutInfoModel(R.drawable.smish_icon,"Satyajit Mishra", R.string.smishgitlink,"Developer"));
+        memberList.add(new AboutInfoModel(R.drawable.monimoy_icon,"Monimoy Paul", R.string.monimoygitlink,"Developer"));
+        memberList.add(new AboutInfoModel(R.drawable.punit_icon,"Punit Mishra", R.string.punitgitlink,"Developer"));
+        memberList.add(new AboutInfoModel(R.drawable.anshuman_icon,"Anshuman Pati", R.string.anshumangitlink,"Content Writer"));
+        return memberList;
     }
 }

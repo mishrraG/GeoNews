@@ -44,10 +44,9 @@ public class Login extends AppCompatActivity {
     Button get, check, gsign;
     ProgressBar progressBar;
     String varCode, verid;
-    FirebaseAuth firebaseAuth,mAuth;
+    FirebaseAuth firebaseAuth, mAuth;
     GoogleSignInClient mGoogleSignInClient;
-    private String num, code;
-    private String[] mCode;
+    private String num;
     private static final int RC_SIGN_IN = 123;//for identifying the activity result
 
     @Override
@@ -62,34 +61,17 @@ public class Login extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
         FirebaseApp.initializeApp(this);
-        spinner = findViewById(R.id.spin);
-//        spinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, Country.countryName));
         phno = findViewById(R.id.user_number);//input field for phone number
         otp = findViewById(R.id.otp);//input field for OTP code.
-        otptxt= findViewById(R.id.otpshw);//text view
+        otptxt = findViewById(R.id.otpshw);//text view
         get = findViewById(R.id.otpget);//button of GET OTP!
         progressBar = findViewById(R.id.progress);
         check = findViewById(R.id.verify);//button for verifying otp code
-        gsign= findViewById(R.id.google_sign);//google signIn button
+        gsign = findViewById(R.id.google_sign);//google signIn button
         otp.setVisibility(View.GONE);
         check.setVisibility(View.GONE);
         otptxt.setVisibility(View.GONE);
         progressBar.setVisibility(View.INVISIBLE);
-
-        mCode = getResources().getStringArray(R.array.country_list_code);
-
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                code =  mCode[i];
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                code = mCode[0];
-            }
-        });
 
 
         //button to start the otp validation
@@ -97,14 +79,13 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-//                Country.countryCode[spinner.getSelectedItemPosition()];//finding country code
                 num = phno.getText().toString().trim();//10 digit phone number
                 if ((num.isEmpty())) {
                     Toast.makeText(Login.this, "Cannot be blank", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(Login.this, "OTP sent!", Toast.LENGTH_SHORT).show();
-                    num = code + num;//county code + phone number
-//                    get.setVisibility(View.INVISIBLE);
+                    num = "+91" + num;   //county code + phone number
+
                     check.setVisibility(View.VISIBLE);
                     otp.setVisibility(View.VISIBLE);
                     otptxt.setVisibility(View.VISIBLE);
@@ -121,11 +102,7 @@ public class Login extends AppCompatActivity {
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        // smish
-//        FirebaseApp.initializeApp(this);
-
-
-        mAuth= FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         //button to start google signIn
         gsign.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,15 +112,14 @@ public class Login extends AppCompatActivity {
         });
 
         //if user logged in through number this happens
-        if(FirebaseAuth.getInstance().getCurrentUser()!=null) {
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             Intent itn = new Intent(Login.this, IntroActivity.class);
             startActivity(itn);
         }
 
         //if user logged in through google account this happens
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if(account!=null)
-        {
+        if (account != null) {
             Intent itn = new Intent(Login.this, IntroActivity.class);
             startActivity(itn);
         }
@@ -151,8 +127,7 @@ public class Login extends AppCompatActivity {
 
     //<GOOGLESIGN IN complex don't touch it >
     //for activity chnaging see in function handleSignInResult(Task<GoogleSignInAccount> completedTask)
-    public void signEmail()
-    {
+    public void signEmail() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -174,7 +149,7 @@ public class Login extends AppCompatActivity {
     public void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            String idToken= account.getIdToken();
+            String idToken = account.getIdToken();
             // Signed in successfully, show authenticated UI.
             firebaseAuthWithGoogle(idToken);
             //updateUI(account);
@@ -184,7 +159,7 @@ public class Login extends AppCompatActivity {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             //Log.w(TAG, "signInResult:failed code=" + e.getStatusCode());
-            Toast.makeText(this,e.toString(),Toast.LENGTH_LONG).show();
+            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
             //updateUI(null);
         }
     }
@@ -196,7 +171,7 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            //TODO
+
                         } else {
                             // If sign in fails, display a message to the user.
                             //Log.w(TAG, "signInWithCredential:failure", task.getException());
@@ -248,7 +223,7 @@ public class Login extends AppCompatActivity {
 
         @Override
         public void onVerificationFailed(@NonNull FirebaseException e) {
-            Toast.makeText(Login.this,e.getMessage().toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(Login.this, e.getMessage().toString(), Toast.LENGTH_LONG).show();
             //Snackbar.make();
             progressBar.setVisibility(View.INVISIBLE);
             otp.setVisibility(View.INVISIBLE);

@@ -12,11 +12,17 @@
     android:theme="@style/Theme.AppCompat.Light.NoActionBar"
     tools:context=".Login">
 
+    <ImageView
+        android:layout_marginTop="30dp"
+        android:layout_width="58dp"
+        android:layout_height="58dp"
+        android:src="@drawable/iconeight_news"/>
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="13dp"
         android:layout_marginRight="24dp"
         android:elevation="10dp"
         app:cardCornerRadius="10dp">
@@ -26,44 +32,27 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp">
-
-            <TextView
-                android:id="@+id/disp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:fontFamily="serif"
-                android:layout_gravity="center_horizontal"
-                android:text="Login"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/colorPrimary"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="20dp">
 
-                <Spinner
-                    android:id="@+id/spin"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:entries="@array/country_list" />
+                    android:fontFamily="monospace"
+                    android:text="Phone Number:"
+                    android:textColor="@color/colorTextTitle"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/user_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:hint="Phone number"
                     android:inputType="number" />
-
-
-
             </LinearLayout>
 
 
@@ -87,6 +76,7 @@
 
                 <EditText
                     android:id="@+id/otp"
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -98,9 +88,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="50dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginRight="50dp"
                 android:background="@drawable/btn_rounded_shape"
                 android:elevation="12dp"
                 android:text="Get OTP"
@@ -113,9 +103,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="50dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginRight="50dp"
                 android:background="@drawable/btn_rounded_shape"
                 android:elevation="12dp"
                 android:text="Verify"
@@ -125,7 +115,7 @@
 
             <Button
                 android:id="@+id/google_sign"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
@@ -134,6 +124,8 @@
                 android:drawableStart="@drawable/googleg_standard_color_18"
                 android:drawablePadding="4dp"
                 android:elevation="12dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
                 android:fontFamily="sans-serif-condensed"
                 android:padding="8dp"
                 android:text="Sign in with Google"

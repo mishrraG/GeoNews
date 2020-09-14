@@ -43,7 +43,7 @@ import java.util.List;
 
 public class NewsActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
-    public static final String API_KEY = "MY-NEWS-API-KEY-HERE";
+    public static final String API_KEY = "NEWS-API-KEY-HERE";
     private RecyclerView recyclerView;
     private List<Article> articles = new ArrayList<>();
     private NewsAdapter adapter;

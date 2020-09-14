@@ -49,6 +49,7 @@ import com.google.android.material.textview.MaterialTextView;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -66,6 +67,7 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback {
     SearchView searchView;
     MaterialTextView textView;
     double latitude, longitude;
+    BottomSheetBehavior standardBottomSheetBehavior;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -120,10 +122,10 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        final BottomSheetBehavior standardBottomSheetBehavior = BottomSheetBehavior.from(bottomsheet);
+        standardBottomSheetBehavior = BottomSheetBehavior.from(bottomsheet);
         Log.d("height", String.valueOf(textView.getLineHeight()));
         Log.d("onMapReadey", "map ready started");
-        standardBottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+        standardBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         final Geocoder geocoder = new Geocoder(mContext);
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
@@ -149,16 +151,17 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback {
                         marker.remove();
                     }
                     marker = mMap.addMarker(new MarkerOptions().position(latLng));
-                    textView.setText(locality + "," + countryName + "(" + countrycode + ")");
+                    textView.setText(countryName + " (" + countrycode + ")");
                     standardBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
-                } else if (featureName != null && countryName != null) {
+                }
+                if (countryName != null) {
                     if (marker != null) {
                         marker.remove();
                     }
                     marker = mMap.addMarker(new MarkerOptions().position(latLng));
-                    textView.setText(featureName + "," + countryName + "(" + countrycode + ")");
+                    textView.setText(countryName + " (" + countrycode + ")");
                     standardBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
@@ -185,21 +188,22 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback {
                         countryName = addressList.get(0).getCountryName();
                     }
                 }
-                if (locality != null && countryName != null) {
+                if (countryName != null) {
                     if (marker != null) {
                         marker.remove();
                     }
                     marker = mMap.addMarker(new MarkerOptions().position(latLng));
-                    textView.setText(locality + "," + countryName + "(" + countrycode + ")");
+                    textView.setText(countryName + " (" + countrycode + ")");
                     standardBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
-                } else if (featureName != null && countryName != null) {
+                }
+                if (countryName != null) {
                     if (marker != null) {
                         marker.remove();
                     }
                     marker = mMap.addMarker(new MarkerOptions().position(latLng));
-                    textView.setText(featureName + "," + countryName + "(" + countrycode + ")");
+                    textView.setText(countryName + " (" + countrycode + ")");
                     standardBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
@@ -211,13 +215,18 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (cardView.getVisibility() == View.GONE) {
                     cardView.setVisibility(View.VISIBLE);
                     button.setImageResource(R.drawable.ic_baseline_cancel_24);
                 } else {
                     cardView.setVisibility(View.GONE);
                     button.setImageResource(R.drawable.ic_baseline_search_24);
+                    if (marker != null) {
+                        marker.remove();
+                    }
+                    if (standardBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                        standardBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    }
                 }
             }
         });
@@ -242,24 +251,15 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback {
                     countryName = slist.get(0).getCountryName();
                 }
                 LatLng latLng = new LatLng(latitude, longitude);
-                if (featureName != null && countryName != null) {
+                if (countryName != null) {
                     if (marker != null) {
                         marker.remove();
                     }
                     marker = mMap.addMarker(new MarkerOptions().position(latLng));
-                    textView.setText(featureName + "," + countryName + "(" + countrycode + ")");
-                    standardBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                } else if (locality != null && countryName != null) {
-                    if (marker != null) {
-                        marker.remove();
-                    }
-                    marker = mMap.addMarker(new MarkerOptions().position(latLng));
-                    textView.setText(locality + "," + countryName + "(" + countrycode + ")");
+                    textView.setText(countryName + " (" + countrycode + ")");
                     standardBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                 } else {
-
                     Toast.makeText(mContext.getApplicationContext(), "No such place found", Toast.LENGTH_SHORT).show();
                 }
 
@@ -277,7 +277,6 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback {
         });
 
 
-
         newsButton.setOnActiveListener(new OnActiveListener() {
             @Override
             public void onActive() {
@@ -288,7 +287,43 @@ public class FirstFragment extends Fragment implements OnMapReadyCallback {
             }
         });
 
-    }
+        final OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if ((marker == null) || (standardBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED)) {
+                    Objects.requireNonNull(getActivity()).finish();
+                }
+                if (marker != null) {
+                    marker.remove();
+                }
+                if (standardBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                    standardBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
 
+    }
+//
+//    @Override
+//    public void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//
+//        final OnBackPressedCallback onBackPressedCallback = new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                if ((marker == null) && (standardBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED)) {
+//                    Objects.requireNonNull(getActivity()).finish();
+//                }
+//                if (marker != null) {
+//                    marker.remove();
+//                }
+//                if (standardBottomSheetBehavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+//                    standardBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+//                }
+//            }
+//        };
+//        requireActivity().getOnBackPressedDispatcher().addCallback(this, onBackPressedCallback);
+//    }
 
 }
